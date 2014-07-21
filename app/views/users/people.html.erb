@@ -1,0 +1,20 @@
+<div id="page-content" style="min-height: 120px;">
+<%= render partial: "layouts/page_top" %>
+	<div class="block block-themed block-last">
+		<div class="block-title">
+			<h4><i id="timeline-icon" class="fa fa-check"></i><% if !current_user.shop_name.nil? %> <%= current_user.shop_name %> Clients <% else %> No Clients in This Group<% end %></h4>
+		</div>
+		<div class="block-content">
+			<div class="timeline-container">
+				<ul class="timeline">
+					<% @user.each do |user| %>
+					<li class="clearfix">
+						<img src="/assets/avatar.jpg" alt="Avatar" class="timeline-avatar">
+						<span class="timeline-title"><%= user.email %></span>
+					</li>
+					<%end%>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>

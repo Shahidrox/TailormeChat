@@ -1,0 +1,33 @@
+<div id="page-content" style="min-height: 120px;">
+<%= render partial: "layouts/page_top" %>
+	<div class="block-section">
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th class="text-center">#</th>
+					<th class="hidden-xs hidden-sm"><i class="fa fa-envelope-o"></i> Message</th>
+					<th class="hidden-xs hidden-sm">Shop Name</th>
+					<th class="hidden-xs hidden-sm">Time</th>
+					<th class="text-center"><i class="fa fa-bolt"></i></th>
+				</tr>
+			</thead>
+			<tbody>
+				<% @all_clients.each do |messages| %>
+				<tr>
+					<td class="text-center"><%= messages.user_id %></td>
+					<td class="hidden-xs hidden-sm"><%= messages.message %></td>
+					<td class="hidden-xs hidden-sm"><%= messages.shop_name %></td>
+					<td class="hidden-xs hidden-sm"><%= timeago_tag messages.created_at, :nojs => true, :limit => 10.days.ago %></td>
+					<td class="text-center">
+						<div class="btn-group">
+							<a href="/chat_room/<%=messages.user_id %>" class="btn btn-sm btn-success">
+								<i class="fa fa-comments"></i> Reply Now
+							</a>
+						</div>
+					</td>
+				</tr>
+				<% end %>
+			</tbody>
+		</table>
+	</div>
+</div>

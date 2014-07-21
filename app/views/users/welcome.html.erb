@@ -1,0 +1,122 @@
+<% if current_user.user_type == "tailor"%>
+<div id="page-content">
+<%= render partial: "layouts/page_top" %>
+<% if current_user.shop_name.nil? %>
+<div class="alert alert-danger" id="alertme"> 
+  Please Add Shop Name to Send Requarment
+<div class="col-md-4" style="top: -7px;">
+  <div class="input-group">
+    <span class="input-group-addon"><i class="fa fa-globe fa-fw"></i></span>
+    <!--<input class="form-control" id="user_shop_name" name="user[shop_name]" type="text">-->
+    <select id="user_shop_name" name="user[shop_name]" class="form-control" size="1">
+      <option value="">Please select shop name</option>
+      <hr>
+      <option value="tmo-sg.myshopify.com">tmo-sg.myshopify.com</option>
+      <option value="tmo-profile.myshopify.com">tmo-profile.myshopify.com</option>
+    </select>
+  </div>
+</div>
+<div class="col-md-2"  style="top: -7px;">
+  <div class="input-group">
+    <button id="submit_comment" class="btn btn-info">Submit</button>
+  </div>
+</div>
+</div>
+<%end%>
+<div class="block block-tiles block-tiles-animated clearfix">
+<a href="/message" class="tile tile-height-2x tile-themed themed-background-tulip">
+<i class="fa fa-envelope-o"></i>
+<div class="tile-info">
+<div class="pull-left">Messages</div>
+<div class="pull-right"><strong></strong></div>
+</div>
+</a>
+
+<a href="/client_reply" class="tile tile-width-2x tile-themed themed-background-amethyst">
+<i class="fa fa-wechat"></i>
+<div class="tile-info">
+<div class="pull-left">Clients query</div>
+<div class="pull-right"><strong></strong></div>
+</div>
+</a>
+
+<a href="/account_settings" class="tile tile-width-2x tile-height-2x tile-themed themed-background-stone">
+<i class="gi gi-coins"></i>
+<div class="tile-info">
+<div class="pull-left">Edit Profile</div>
+<div class="pull-right"><strong></strong></div>
+</div>
+</a>
+<a href="/shop_client" class="tile tile-width-2x tile-themed themed-background-amethyst">
+<i class="gi gi-group"></i>
+<div class="tile-info">
+<div class="pull-left">Clients</div>
+<div class="pull-right"><strong></strong></div>
+</div>
+</a>
+
+</div>
+
+
+<script>
+	$("#submit_comment").click(function (){
+		$("#user_shop_name").val();
+		$.ajax({ type: 'POST', url: '/authentication/save_shop', data: ({'shop_name': $("#user_shop_name").val()}), succes: function(){
+            $("#alertme").hide();
+        }});
+	});
+</script>
+<%else%>
+
+<div id="page-content">
+<%= render partial: "layouts/page_top" %>
+<% if current_user.shop_name.nil? %>
+<div class="alert alert-danger" id="alertme"> 
+  Please Add Shop Name to Send Requarment
+<div class="col-md-4" style="top: -7px;">
+  <div class="input-group">
+    <span class="input-group-addon"><i class="fa fa-globe fa-fw"></i></span>
+    <!--<input class="form-control" id="user_shop_name" name="user[shop_name]" type="text">-->
+    <select id="user_shop_name" name="user[shop_name]" class="form-control" size="1">
+      <option value="">Please select shop name</option>
+      <hr>
+      <option value="tmo-sg.myshopify.com">tmo-sg.myshopify.com</option>
+      <option value="tmo-profile.myshopify.com">tmo-profile.myshopify.com</option>
+    </select>
+  </div>
+</div>
+<div class="col-md-2"  style="top: -7px;">
+  <div class="input-group">
+    <button id="submit_comment" class="btn btn-info">Submit</button>
+  </div>
+</div>
+</div>
+<%end%>
+<div class="block block-tiles block-tiles-animated clearfix">
+<a href="/message" class="tile tile-height-2x tile-themed themed-background-tulip">
+<i class="fa fa-envelope-o"></i>
+<div class="tile-info">
+<div class="pull-left">Messages</div>
+<div class="pull-right"><strong></strong></div>
+</div>
+</a>
+<a href="/shop_message" class="tile tile-width-2x tile-themed themed-background-amethyst">
+<i class="fa fa-comments-o"></i>
+<div class="tile-info">
+<div class="pull-left">Send Message to Shop</div>
+<div class="pull-right"></div>
+</div>
+</a>
+
+
+</div>
+<script>
+	$("#submit_comment").click(function (){
+		$("#user_shop_name").val();
+		$.ajax({ type: 'POST', url: '/authentication/save_shop', data: ({'shop_name': $("#user_shop_name").val()}), succes: function(){
+            $("#alertme").hide();
+        }});
+	});
+</script>
+</div>
+<%end%>

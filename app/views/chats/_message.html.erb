@@ -1,0 +1,21 @@
+<% @messages.each do |chat| %>
+  <%
+    sql="SELECT C.id,C.reply,C.created_at,U.id,U.email, U.user_type FROM users U,chats C WHERE C.user_id_fk=U.id and C.message_id_fk='#{chat.id}'"
+    chat_details=Message.find_by_sql(sql)
+    type_user=User.find_by_sql(sql)
+  %>
+  <li <% if type_user.first.user_type == "tailor" %>class="chat-msg-user"<%end%>>
+    <% if !chat_details.empty? %>
+      <span class="chat-msg-time" ><%= timeago_tag chat_details.first.created_at, :nojs => true, :limit => 10.days.ago %> by 
+      <a href="#"><%= chat_details.first.email %></a></span>
+      <% if type_user.first.user_type == "tailor" %>
+        <img src="/assets/avatar.jpg">
+      <%else%>
+        <img src="/assets/image_64x64_dark.png">
+      <%end%>
+      <%= chat_details.first.reply %>
+    <% else %>
+      <p>Send a message</p>
+    <% end %>
+  </li>
+<% end %>

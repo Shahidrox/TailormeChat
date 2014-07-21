@@ -1,0 +1,35 @@
+<div style="min-height: 120px;" id="page-content">
+  <%= render partial: "layouts/page_top" %>
+  <div class="block block-themed block-last">
+    <div class="block-title">
+      <h4>Shop Name: <%= current_user.shop_name %></h4>
+    </div>
+    <div class="block-content block-content-flat">
+      <div class="chat-container clearfix">
+        <div class="chat-messages">
+          <ul>
+            <%= render 'message' %>
+          </ul>
+        </div>
+      </div>
+      <div class="chat-input themed-background">
+        <input type="text" name="chat-message" class="form-control comment_text" placeholder="Type a message and hit enter..">
+      </div>
+    </div>
+  </div>
+<script>
+    $('.comment_text').keypress(function(e) {
+        if (e.keyCode == 13 && !e.shiftKey) {
+             e.preventDefault();
+        if ($(".comment_text").val()){
+            $("#loader").show();
+             $.ajax({ type: 'POST', url: '/messages/create_message', data: ({'user_id': "<%= @user.id %>",'my_id': "<%= current_user.id %>", 'message': $(".comment_text").val()}), succes: function(){
+                 $('#message-list').append(data).show();
+             }});
+        }
+        else{
+            alert("Please Enter Message")
+        };
+        };
+    });
+</script>

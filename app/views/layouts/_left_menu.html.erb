@@ -1,0 +1,69 @@
+<aside class="collapse navbar-collapse navbar-main-collapse" id="page-sidebar">
+	<div class="side-scrollable">
+		<div class="mini-profile">
+			<div class="mini-profile-options">
+				<a title="" data-placement="right" data-toggle="tooltip" class="badge badge-info loading-on" href="javascript:void(0)" data-original-title="Refresh">
+					<i class="fa fa-refresh"></i>
+				</a>
+				<a title="" data-placement="right" data-toggle="tooltip" class="badge badge-warning" href="javascript:void(0)" data-original-title="6 Products">
+					<i class="gi gi-shopping_cart"></i>
+				</a>
+				<a title="" data-placement="right" data-toggle="modal" role="button" class="badge badge-success enable-tooltip" href="#modal-user-account" data-original-title="Settings">
+					<i class="gi gi-cogwheel"></i>
+				</a>
+				<a title="" data-placement="right" data-toggle="tooltip" class="badge badge-danger" href="javascript:void(0)" data-original-title="Log out">
+					<i class="fa fa-sign-out"></i>
+				</a>
+			</div>
+			<a href="javascript:void(0)">
+				<img class="img-circle" alt="Avatar" src="/assets/avatar2.jpg">
+			</a>
+		</div>
+	<div class="sidebar-tabs-con">
+	<ul data-toggle="tabs" class="sidebar-tabs">
+	<li class="active">
+	<a href="#side-tab-menu"><i class="gi gi-list"></i></a>
+	</li>
+	
+	</ul>
+	<div class="tab-content">
+	<div id="side-tab-menu" class="tab-pane active">
+	<nav id="primary-nav">
+	<ul>
+	<li>
+	<a class=" active" href="/welcome"><i class="gi gi-display"></i>Dashboard</a>
+	</li>
+	<% if current_user %>
+	<li>
+	<a  href="/signed_out"><i class="gi gi-power"></i>Sign Out</a>
+	</li>
+   <% else %>
+	<li>
+	<a  href="/sign_in"><i class="gi gi-power"></i>Login</a>
+	</li>
+	<li>/signed_out
+	<a  href="/new_user"><i class="gi gi-power"></i>Resister</a>
+	</li>
+  <% end %>
+
+	</ul>
+	</nav>
+
+
+
+
+
+
+
+
+
+	</div>
+
+	</div>
+	</div>
+	</div>
+</aside>
+
+<div id="pre-page-content">
+<h1><i class="fa fa-file-text themed-color"></i>Dashboard<br><small>Welcome <strong>Admin</strong>, everything looks good!</small></h1>
+</div>

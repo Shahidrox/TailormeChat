@@ -1,0 +1,115 @@
+<html class=" js no-touch csstransitions"><!--<![endif]-->
+	<head>
+		<meta charset="utf-8">
+		<title>Login</title>
+		<meta name="description" content="Tailorme Chat">
+		<meta name="author" content="pixelcave">
+		<meta name="robots" content="noindex, nofollow">
+		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0">
+		<link rel="stylesheet" href="/assets/bootstrap-2.0.css">
+		<link rel="stylesheet" href="/assets/plugins-2.0.css">
+		<link rel="stylesheet" href="/assets/main-2.0.css">
+		<link rel="stylesheet" href="/assets/themes-2.0.css">
+		<script async="" src="//www.google-analytics.com/analytics.js"></script>
+		<script src="/assets/modernizr-2.7.1-respond-1.4.2.min.js"></script>
+		<style type="text/css">
+		.jqstooltip 
+		{ 
+			position: absolute;left: 0px;top: 0px;
+			visibility: hidden;
+			background: rgb(0, 0, 0) transparent;
+			background-color: rgba(0,0,0,0.6);
+			filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000);-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000)";
+			color: white;
+			font: 10px arial, san serif;text-align: left;
+			white-space: nowrap;
+			padding: 5px;
+			border: 1px solid white;
+			z-index: 10000;
+		}
+		.jqsfield 
+		{ color: white;
+			font: 10px arial, san serif;
+			text-align: left;
+		}
+		</style>
+		</head>
+		<body class="login no-animation">
+			<a href="/home" class="login-btn themed-background-default">
+			    <span class="login-logo">
+			    	<span class="square1 themed-border-default"></span>
+			    	<span class="square2"></span>
+			    </span>
+		  	</a>		  	
+			
+			<div id="login-container">
+				<div class="block-tabs block-themed">
+					<ul id="login-tabs" class="nav nav-tabs" data-toggle="tabs">
+						<li class="text-center" style="width:100%">
+							<a href="#">
+								<i class="fa fa-user"></i> Login
+							</a>
+						</li>
+					</ul>
+					<% flash.each do |name, msg| %>
+				<div class="alert alert-danger">
+				    <strong ><%= content_tag :div, msg, :id => "flash_#{name}" %></strong>
+				</div>
+			<% end %>
+				<div class="tab-content">
+					<div class="tab-pane active" id="login-form-tab">
+						<div id="login-buttons">
+							<a href="/auth/facebook" id="login-btn-facebook" class="btn btn-lg btn-primary" style="width:100%"><i class="fa fa-facebook"></i> Facebook</a><br/><br/>
+							<!--<button id="login-btn-twitter" class="btn btn-lg btn-info"><i class="fa fa-twitter"></i> Twitter</button>-->
+						</div>
+						<div id="login-form" class="form-horizontal">
+							<%#= form_for @user, :as => :user, :url => sign_in_path(@user) do |f| %>
+							<%= form_tag sign_in_path do %>
+								<div class="form-group">
+									<div class="col-xs-12">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="fa fa-envelope-o fa-fw"></i></span>
+											<input id="user_username" name="user[username]" type="text" class="form-control" placeholder="Username or Email...." required>
+											<%#= f.text_field :username, :class => "form-control", :placeholder => "Username or Email...." %>
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-xs-12">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="fa fa-asterisk fa-fw"></i></span>
+											<input id="user_password" name="user[password]" type="password" class="form-control" placeholder="Password..">
+											<%#= f.password_field :password, :class => "form-control", :placeholder => "Password.." %>
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-xs-12 clearfix">
+										<div class="pull-right">
+										<button type="submit" class="btn btn-success remove-margin">Login</button>
+										<%#= f.submit 'Sign In', :class => "btn btn-success" %>
+									</div>
+									<div class="pull-left">
+										<a href="/new_user" class="remove-margin">Register</a>
+									</div>
+									<div class="pull-left login-extra-check">
+										<!--<label for="login-remember-me">
+										<div class="icheckbox_square-grey" style="position: relative;"><input type="checkbox" id="login-remember-me" name="login-remember-me" class="input-themed" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"></ins></div>
+										Remember me
+										</label>-->
+									</div>
+								</div>
+							</div>
+							<%end%>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		<script>!window.jQuery && document.write(decodeURI('%3Cscript src="js/vendor/jquery-1.11.1.min.js"%3E%3C/script%3E'));</script>
+		<script src="/assets/bootstrap.min-2.0.js"></script>
+		<script src="/assets/plugins-2.0.js"></script>
+		<script src="/assets/main-2.0.js"></script>
+	</body>
+</html>
