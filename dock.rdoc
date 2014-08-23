@@ -1,0 +1,79 @@
+# This model use in store users information
+rails g model User 
+
+# this controller use in authenticate and create a new user
+rails g controller authentication
+
+# This scaffold use in store sender (user id) and reciver (user id)
+rails g scaffold Message sender:integer receiver:integer 
+#chenge in message migration
+t.integer :sender, :references => "user"
+t.integer :receiver, :references => "user"
+
+# This scaffold use for chat and store user id, message id, message 
+rails g scaffold Chat reply:text user_id_fk:integer message_id_fk:integer 
+#chenge in message migration
+t.integer :user_id_fk, :references => "user"
+t.integer :message_id_fk, :references => "message"
+
+# This migration use for store shop name and user type like tailor or Client
+rails g migration add_user_type_to_users user_type:string shop_name:string
+
+# This model use for shop when a client send message 
+rails g model Shop user_id:integer shop_name:string message:string
+
+# This controller use only ios iphon
+rails g controller ios_iphone
+
+# Add title field in users table
+rails g migration add_title_to_users title:string
+
+# Create Admin
+rake db:seed
+( email => 'admin@tmochat.com', password => 'tmoadmin' )
+
+# Send the chat transcript to users e-mail
+rails generate mailer UserEmail
+
+# Add visitors ip location
+rails generate ahoy:stores:active_record_visits
+rake db:migrate
+
+# Add notifications ( add default value exp: add_column :messages, :is_seen, :integer, :default => 0 )
+rails g migration add_is_seen_to_messages is_seen:integer
+
+# Usefull Link For Iphone
+# Login with facebook
+Local => https://tmo_3-c9-gaz_dev4.c9.io/iphone
+Devel => http://tmo-chat.herokuapp.com/iphone
+
+# Save Shop name
+Local => https://tmo_3-c9-gaz_dev4.c9.io/add_shop_name
+Devel => http://tmo-chat.herokuapp.com/add_shop_name
+
+# Send message to Shop
+Local => https://tmo_3-c9-gaz_dev4.c9.io/send_msg_to_shop
+Devel => http://tmo-chat.herokuapp.com/send_msg_to_shop
+
+# Client inbox
+Local => https://tmo_3-c9-gaz_dev4.c9.io/iphone_inbox
+Devel => http://tmo-chat.herokuapp.com/iphone_inbox
+
+# Start Chat
+Local => https://tmo_3-c9-gaz_dev4.c9.io/create_chat
+Devel => http://tmo-chat.herokuapp.com/create_chat
+
+# Get Chat
+Local => https://tmo_3-c9-gaz_dev4.c9.io/show_chat
+Devel => http://tmo-chat.herokuapp.com/show_chat
+
+# Get Tailor lest
+Local => https://tmo_3-c9-gaz_dev4.c9.io/load_tailors
+Devel => http://tmo-chat.herokuapp.com/load_tailors
+
+
+# Git Commands
+git push git@heroku.com:tailorme-chat.git
+heroku run rake db:migrate
+heroku run rails console
+User.delet_all
