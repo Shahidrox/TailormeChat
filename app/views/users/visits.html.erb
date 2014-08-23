@@ -1,0 +1,30 @@
+<div id="page-content" style="min-height: 120px;">
+	<%= render partial: "layouts/page_top" %>
+	<div class="block block-themed block-last">
+<b>Total Visits:</b>	<span class="label label-danger"><%= @all_visis_count %></span>
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th class="text-center">OS</th>
+					<th>IP</th>
+					<th class="hidden-xs hidden-sm">BROWSER</th>
+					<th class="hidden-xs hidden-sm">COUNTRY</th>
+					<th class="hidden-xs hidden-sm">CITY</th>
+					<th class="hidden-xs hidden-sm">STARTED AT</th>
+				</tr>
+			</thead>
+			<tbody>
+				<% @all_visits.each do |chat| %>
+				<tr>
+					<td class="text-center"><%= chat.os %></td>
+					<td><a href="javascript:void(0)"><%= chat.ip %></a></td>
+					<td class="hidden-xs hidden-sm"><%= chat.browser %></td>
+					<td class="hidden-xs hidden-sm"><%= chat.country %></td>
+					<td class="hidden-xs hidden-sm"><%= chat.city  %></td>
+					<td class="hidden-xs hidden-sm"><%= chat.started_at.strftime("%b %d, %Y") %></td>
+				</tr>
+				<% end %>
+			</tbody>
+		</table>
+	</div>
+</div>

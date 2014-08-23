@@ -1,0 +1,11 @@
+development:
+  server: "http://localhost:9292/faye"
+  secret_token: "secret"
+test:
+  server: "http://localhost:9292/faye"
+  secret_token: "secret"
+production:
+  #server: "http://example.com/faye"
+  server: "http://tailorme-chat.herokuapp.com/faye"
+  secret_token: "88dc135c8ffed999c0972477d8eda9d21b14b5847570de669c4504e0d0490822"
+  signature_expiration: 3600 # one hour

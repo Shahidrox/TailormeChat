@@ -1,33 +1,33 @@
 <div id="page-content" style="min-height: 120px;">
-<%= render partial: "layouts/page_top" %>
+  <%= render partial: "layouts/page_top" %>
   <div class="block block-themed block-last">
     <div class="block-title">
       <h4>Replies</h4>
     </div>
-  <div class="block-content block-content-flat">
-    <div class="chat-container clearfix">
-      <div class="chat-messages">
-        <ul>
-        <% @all_msg.each do |messages| %>
-          <% if !messages.id.nil? %>
-            <%
-              @reply_all=Chat.where("message_id_fk=?",messages.id).select("reply","user_id_fk","created_at")
-              @user=User.where("id=?",@reply_all.first.user_id_fk).select("email","id")
-            %>
-          <li>
-            <span class="chat-msg-time"><%= timeago_tag @reply_all.first.created_at, :nojs => true, :limit => 10.days.ago %><a href="#"> <%=@user.first.email %></a>
-            <div class="btn-group">
-              <% if @user.first.id != current_user.id %><a href="/chat_room/<%=@user.first.id %>" class="btn btn-sm btn-success"><i class="fa fa-comments"></i>Chat Now</a><%end%>
-            </div>
-            </span>
-            <img src="/assets/image_64x64_dark.png" alt="avatar" class="img-circle">
-           <% if !@reply_all.nil? %><%= @reply_all.first.reply %><%end%>
-          </li>   
-          <%end%>
-        <%end%>
-        </ul>
+    <div class="block-content block-content-flat">
+      <div class="chat-container clearfix">
+        <div class="chat-messages">
+          <ul>
+            <% @all_msg.each do |messages| %>
+              <% if !messages.id.nil? %>
+                <%
+                  @reply_all=Chat.where("message_id_fk=?",messages.id).select("reply","user_id_fk","created_at")
+                  @user=User.where("id=?",@reply_all.first.user_id_fk).select("email","id")
+                %>
+                <li>
+                  <span class="chat-msg-time"><%= timeago_tag @reply_all.first.created_at, :nojs => true, :limit => 10.days.ago %><a href="#"> <%=@user.first.email %></a>
+                    <div class="btn-group">
+                      <a href="/chat_room/<% if @user.first.id != current_user.id %> <%= messages.sender %><% else %> <%= messages.receiver %><% end %>" class="btn btn-sm btn-success"><i class="fa fa-comments"></i>Chat Now</a>
+                    </div>
+                  </span>
+                  <img src="/assets/image_64x64_dark.png" alt="avatar" class="img-circle">
+                  <% if !@reply_all.nil? %><%= @reply_all.first.reply %><%end%>
+                </li> 
+              <%end%>
+            <%end%>
+          </ul>
+        </div>
       </div>
     </div>
-   </div>
   </div>
 </div>

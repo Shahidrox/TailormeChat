@@ -1,30 +1,45 @@
+<script type="text/javascript">
+ $(window).load(function() 
+{
+  $.ajax({ type: 'POST', url: '/users/is_seen_method', data: ({'user_id': "<%= @user.id %>",'my_id': "<%= current_user.id %>"}), succes: function(){
+  }});
+});
+</script>
 <div style="min-height: 120px;" id="page-content">
   <%= render partial: "layouts/page_top" %>
   <div class="block block-themed block-last">
+  <span class="ajax-loader" style="position: absolute;height: 100%;top: 0;left: 0; bottom: 0; right: 0;background-color: rgba(0, 0, 0, 0.7);"><i style="margin:10% 50%;" class="fa fa-spinner fa-spin fa-5x text-success"></i>
+  </span>
     <div class="block-title">
-      <h4>Shop Name: <%= current_user.shop_name %></h4>
+        <div class="block-options hidden-xs">
+            <% if current_user.user_type == "client" %>
+              <a href="javascript:void(0)" id="send_mail" title="Send the chat transcript to your e-mail" class="btn btn-option" ><i class="fa fa-envelope"></i></a>
+            <% end %>            
+        </div>
+        <h4>Shop Name: <%= current_user.shop_name %></h4>
     </div>
     <div class="block-content block-content-flat">
-      <div class="chat-container clearfix">
-        <div class="chat-messages">
-          <ul>
-            <%= render 'message' %>
-          </ul>
-        </div>
-      </div>
-      <div class="chat-input themed-background">
-        <input type="text" name="chat-message" class="form-control comment_text" placeholder="Type a message and hit enter..">
-      </div>
+    
+    <div class="chat-container clearfix scrl">
+    
+    <ul class="chat-messages load_msg">
+        <%= render 'message' %>
+        </ul>
+        </div></div>
+        <div class="chat-input themed-background">
+            <input type="text" name="chat-message" class="form-control comment_text" placeholder="Type a message and hit enter..">
+        
     </div>
-  </div>
+</div>
 <script>
+
     $('.comment_text').keypress(function(e) {
         if (e.keyCode == 13 && !e.shiftKey) {
              e.preventDefault();
         if ($(".comment_text").val()){
             $("#loader").show();
-             $.ajax({ type: 'POST', url: '/messages/create_message', data: ({'user_id': "<%= @user.id %>",'my_id': "<%= current_user.id %>", 'message': $(".comment_text").val()}), succes: function(){
-                 $('#message-list').append(data).show();
+             $.ajax({ type: 'POST', url: '/users/create_message', data: ({'user_id': "<%= @user.id %>",'my_id': "<%= current_user.id %>", 'message': $(".comment_text").val()}), succes: function(){
+                 
              }});
         }
         else{
@@ -32,4 +47,16 @@
         };
         };
     });
+    $(".ajax-loader").hide();
+    $("#send_mail").click(function(){
+        $(".ajax-loader").show();
+        $.ajax({ type: 'POST', url: '/send_email', data: ({'user_id': "<%= @user.id %>",'my_id': "<%= current_user.id %>",'sender_email':"<%= current_user.email %>" }), succes: function(){   
+           // alert("Send email successfully ");
+        }});
+    })
+    setInterval(function() { 
+      $.ajax({ type: 'POST', url: '/users/auto_load_chat', data: ({'user_id': "<%= params[:id] %>",'my_id': "<%= current_user.id %>"}), succes: function(){  
+      }});
+    }, 5000);
 </script>
+<%#= subscribe_to "/messages/new" %>

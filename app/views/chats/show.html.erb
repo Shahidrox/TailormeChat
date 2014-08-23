@@ -1,20 +1,18 @@
 <table >
- <tbody >
-<% @all_msg.each do |messages| %>
-<% if !messages.id.nil? %>
-<%
-  @reply_all=Chat.where("message_id_fk=?",messages.id).select("reply","user_id_fk","created_at")
-  @user=User.where("id=?",@reply_all.first.user_id_fk).select("email","id")
-%>
- 
-    <tr>
-      <td><a href="javascript:void(0)"><%=@user.first.email %></a></td>
-      <td ><% if !@reply_all.nil? %><%= @reply_all.first.reply %><%end%></td>
-      <td ><%= timeago_tag @reply_all.first.created_at, :nojs => true, :limit => 10.days.ago %></td>
-      <td ><span ><a href="/chat_room/<%=@user.first.id %>">reply now</span></td>
-      
-    </tr>
-  <%end%>
+  <tbody >
+  <% @all_msg.each do |messages| %>
+    <% if !messages.id.nil? %>
+      <%
+      @reply_all=Chat.where("message_id_fk=?",messages.id).select("reply","user_id_fk","created_at")
+      @user=User.where("id=?",@reply_all.first.user_id_fk).select("email","id")
+      %>
+      <tr>
+        <td><a href="javascript:void(0)"><%=@user.first.email %></a></td>
+        <td ><% if !@reply_all.nil? %><%= @reply_all.first.reply %><%end%></td>
+        <td ><%= timeago_tag @reply_all.first.created_at, :nojs => true, :limit => 10.days.ago %></td>
+        <td ><span ><a href="/chat_room/<%=@user.first.id %>">reply now</span></td>
+      </tr>
+    <%end%>
   <%end%>
   </tbody>
 </table>

@@ -1,9 +1,9 @@
 <div id="comments">
-<% @shop.each do |shop| %>
-    <li>
-        <span class="chat-msg-time"><%= timeago_tag shop.created_at, :nojs => true, :limit => 10.days.ago %> by <a href="#">You</a></span>
-        <img src="/assets/avatar.jpg" alt="avatar" class="img-circle">
-        <%= shop.message %>
-    </li>
-<%end%>
+    <% @shop.each do |shop| %>
+        <li>
+            <span class="chat-msg-time"><%= timeago_tag shop.created_at, :nojs => true, :limit => 10.days.ago %> by <a href="#">You</a></span>
+            <img src="/assets/avatar.jpg" alt="avatar" class="img-circle">
+            <%= shop.message %>
+        </li>
+    <%end%>
 </div>

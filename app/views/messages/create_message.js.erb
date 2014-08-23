@@ -1,1 +1,3 @@
-window.location.reload();
+<%# publish_to "/messages/new" do %>
+ $('.load_message').html('<%= escape_javascript( render :partial => "/chats/message" ) %>');
+<%# end %>

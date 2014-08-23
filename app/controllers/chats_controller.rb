@@ -3,12 +3,12 @@ class ChatsController < ApplicationController
     @id=params[:id]
     @user=User.find(params[:id])
     @sender=current_user.id
-    @messages=Message.where("(sender=? AND receiver=?) or (sender=? AND receiver=?)",@sender,@id,@id,@sender).order("id DESC")
+    @chat=Message.where("(sender=? AND receiver=?) or (sender=? AND receiver=?)",@sender,@id,@id,@sender) #.order("id DESC")
     
     respond_to do |format|
       format.html # new.html.erb
       format.js { render 'message', :format => :html, :layout => false }
-      format.json { render json: @messages }
+      format.json { render json: @chat }
     end
   end
 

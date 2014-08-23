@@ -1,4 +1,5 @@
 class AuthenticationController < ApplicationController
+  skip_before_filter :require_login
   skip_before_filter :verify_authenticity_token
   layout false
   def sign_in
@@ -25,16 +26,15 @@ class AuthenticationController < ApplicationController
       flash.now[:error] = 'Unknown user. Please check your username and password.'
       render :action => "sign_in"
     end
-
   end
 
   def signed_out
-	  session[:user_id] = nil
-	  flash[:notice] = "You have been signed out."
-	end
+    session[:user_id] = nil
+    render :action => "sign_in"
+  end
 
-def new_user
-      @user = User.new
+  def new_user
+    @user = User.new
   end
 
   def register
@@ -43,7 +43,6 @@ def new_user
     if @user.valid?
       @user.save
       session[:user_id] = @user.id
-      #flash[:notice] = 'Welcome.'
       redirect_to welcome_path
     else
       render :action => "new_user"
@@ -57,33 +56,25 @@ def new_user
 
   def set_account_info
   old_user = current_user
-
-  # verify the current password by creating a new user record.
   @user = User.authenticate_by_username(old_user.username, params[:user][:password])
 
-  # verify
-  if @user.nil?
-    @user = current_user
-    @user.errors[:password] = "Password is incorrect."
-    render :action => "account_settings"
-  else
-    # update the user with any new username and email
-    @user.update(edit_user_params)
-    # Set the old email and username, which is validated only if it has changed.
-    #@user.previous_email = old_user.email
-    #@user.previous_username = old_user.username
-
-    if @user.valid?
-      # If there is a new_password value, then we need to update the password.
-      @user.password = @user.new_password unless @user.new_password.nil? || @user.new_password.empty?
-      @user.save
-      flash[:notice] = 'Account settings have been changed.'
-      redirect_to welcome_path
-    else
+    if @user.nil?
+      @user = current_user
+      @user.errors[:password] = "Password is incorrect."
       render :action => "account_settings"
+    else
+      @user.update(edit_user_params)
+      if @user.valid?
+        # If there is a new_password value, then we need to update the password.
+        @user.password = @user.new_password unless @user.new_password.nil? || @user.new_password.empty?
+        @user.save
+        flash[:notice] = 'Account settings have been changed.'
+        redirect_to welcome_path
+      else
+        render :action => "account_settings"
+      end
     end
   end
-end
 
   def fb_create
     user = User.from_omniauth(env["omniauth.auth"])
@@ -106,18 +97,13 @@ end
     params.require(:user).permit(allow)
   end
 
-  #def android_params
-  #  allow = [:uid,:email, :token, :provider]
-  #  params.require(:user).permit(allow)
-  #end
-
   def user_params
-    allow = [:shop_name, :username,:email, :password]
+    allow = [:shop_name, :title, :username,:email, :password ]
     params.require(:user).permit(allow)
   end
 
   def edit_user_params
-    allow = [:username,:email,:password,:shop_name]
+    allow = [:username,:email,:password,:shop_name, :title]
     params.require(:user).permit(allow)
   end
   

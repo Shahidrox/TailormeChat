@@ -9,6 +9,10 @@ gem 'bcrypt-ruby', :require=>'bcrypt'
 gem 'omniauth-facebook'
 gem 'certified'
 gem 'rails-timeago', '~> 2.0'
+gem 'httparty'
+gem 'thin'
+gem 'ahoy_matey'
+gem 'foreman', '~> 0.61'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
@@ -24,6 +28,7 @@ gem 'coffee-rails', '~> 4.0.0'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
+gem 'private_pub'
 
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'

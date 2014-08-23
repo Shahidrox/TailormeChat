@@ -25,30 +25,52 @@ rails g model Shop user_id:integer shop_name:string message:string
 # This controller use only ios iphon
 rails g controller ios_iphone
 
+# Add title field in users table
+rails g migration add_title_to_users title:string
+
+# Create Admin
+rake db:seed
+( email => 'admin@tmochat.com', password => 'tmoadmin' )
+
+# Send the chat transcript to users e-mail
+rails generate mailer UserEmail
+
+# Add visitors ip location
+rails generate ahoy:stores:active_record_visits
+rake db:migrate
+
+# Add notifications ( add default value exp: add_column :messages, :is_seen, :integer, :default => 0 )
+rails g migration add_is_seen_to_messages is_seen:integer
+
 # Usefull Link For Iphone
 # Login with facebook
-Local => http://10.0.1.103:3000/iphone
-Devel => http://tailorme-chat.herokuapp.com/iphone
+Local => https://tmo_3-c9-gaz_dev4.c9.io/iphone
+Devel => http://tmo-chat.herokuapp.com/iphone
 
 # Save Shop name
-Local => http://10.0.1.103:3000/add_shop_name
-Devel => http://tailorme-chat.herokuapp.com/add_shop_name
+Local => https://tmo_3-c9-gaz_dev4.c9.io/add_shop_name
+Devel => http://tmo-chat.herokuapp.com/add_shop_name
 
 # Send message to Shop
-Local => http://10.0.1.103:3000/send_msg_to_shop
-Devel => http://tailorme-chat.herokuapp.com/send_msg_to_shop
+Local => https://tmo_3-c9-gaz_dev4.c9.io/send_msg_to_shop
+Devel => http://tmo-chat.herokuapp.com/send_msg_to_shop
 
 # Client inbox
-Local => http://10.0.1.103:3000/iphone_inbox
-Devel => http://tailorme-chat.herokuapp.com/iphone_inbox
+Local => https://tmo_3-c9-gaz_dev4.c9.io/iphone_inbox
+Devel => http://tmo-chat.herokuapp.com/iphone_inbox
 
 # Start Chat
-Local => http://10.0.1.103:3000/create_chat
-Devel =>  http://tailorme-chat.herokuapp.com/create_chat
+Local => https://tmo_3-c9-gaz_dev4.c9.io/create_chat
+Devel => http://tmo-chat.herokuapp.com/create_chat
 
 # Get Chat
-Local => http://10.0.1.103:3000/show_chat
-Devel =>  http://tailorme-chat.herokuapp.com/show_chat
+Local => https://tmo_3-c9-gaz_dev4.c9.io/show_chat
+Devel => http://tmo-chat.herokuapp.com/show_chat
+
+# Get Tailor lest
+Local => https://tmo_3-c9-gaz_dev4.c9.io/load_tailors
+Devel => http://tmo-chat.herokuapp.com/load_tailors
+
 
 # Git Commands
 git push git@heroku.com:tailorme-chat.git

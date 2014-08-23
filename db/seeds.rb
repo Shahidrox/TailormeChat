@@ -5,3 +5,18 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+puts "********Seeding Data Start************"
+admin=User.find(:all, :conditions => ["email=?",'admin@tmochat.com'])
+if admin.blank?
+	admin=User.new(:username => 'admin', 
+		:email => 'admin@tmochat.com', 
+		:password => 'tmoadmin', 
+		:password_confirmation => 'tmoadmin', 
+		:user_type => 'Admin')
+	     admin.save!(:validate => false)
+	puts "data feed successfully!!!"
+else
+	puts "data Already added!!!"
+end
+
+puts "********Seeding Data End************"

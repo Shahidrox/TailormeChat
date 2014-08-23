@@ -6,6 +6,7 @@ class User < ActiveRecord::Base
   validates_confirmation_of :password
   validates_presence_of :password, :on => :create
   validates_presence_of :shop_name, :on => :create
+  # validates_presence_of :title, :on => :create
   validates_presence_of :email, :on => :create
   validates_presence_of :username, :on => :create
   validates_uniqueness_of :email
@@ -28,14 +29,14 @@ class User < ActiveRecord::Base
   end
 
 
- def self.authenticate_by_email(email, password)
-  user = find_by_email(email)
-  if user && user.password_hash == BCrypt::Engine.hash_secret(password, user.password_salt)
-    user
-  else
-    nil
+  def self.authenticate_by_email(email, password)
+    user = find_by_email(email)
+    if user && user.password_hash == BCrypt::Engine.hash_secret(password, user.password_salt)
+      user
+    else
+      nil
+    end
   end
-end
 
 def self.authenticate_by_username(username, password)
   user = find_by_username(username)

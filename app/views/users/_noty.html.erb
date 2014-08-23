@@ -1,0 +1,29 @@
+<% if !@notification.nil? %>
+	<div style="position: absolute;width: 83%;height: 70%;">
+		    <div class="notification">
+	  <% @notification.each do |messages| %>
+	    <%
+	      @reply_all=Chat.where("message_id_fk=?",messages.id).select("reply","user_id_fk","created_at")
+	      @user=User.where("id=?",@reply_all.first.user_id_fk).select("email","id")
+	    %>
+
+	    <a href="/chat_room/<%= messages.sender %>">
+	    <div class="alert alert-danger">
+			<i class="fa fa-envelope"></i> you have a message from <strong><%= @user.first.email %></strong>
+		</div>
+	    </a>
+	  <% end %>
+	  </div>
+	</div>
+<% end %>
+<style type="text/css">
+  .notification{ 
+    width: 25%;
+    float: right;
+  }
+  .notification p{
+    margin: 0px 8px 7px 10px;
+    color: lightblue;
+  }
+  .notification b{color:#fff}
+</style>

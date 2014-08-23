@@ -2,7 +2,10 @@ TailormeChat::Application.routes.draw do
   
   get "/chat_room/:id/" => "chats#index", :as => :chat_room
   get "welcome" => "users#welcome"
-  post "/messages/create_message"
+  # post "/messages/create_message"
+  # post "/messages/auto_load_chat"
+  post "/users/create_message"
+  post "/users/auto_load_chat"
   get  "message" => "users#message_notification"
   get  "shop_client" => "users#people"
   
@@ -13,6 +16,7 @@ TailormeChat::Application.routes.draw do
   get 'auth/failure', to: redirect('/')
 
   post "authentication/save_shop"
+  post "users/save_title"
   
   get "sign_in" => "authentication#sign_in"
   post "sign_in" => "authentication#login"
@@ -28,6 +32,13 @@ TailormeChat::Application.routes.draw do
   post "users/create_message_shop"
 
   get "client_reply" => "users#client_reply"
+  
+  post "send_email" => "users#email"
+  
+  get "visits_list" => "users#visits"
+
+  post "/users/is_seen_method"
+  post "/users/chek_notification"
 
   # Routes For ios 
   post 'iphone', to: 'ios_iphone#android'
@@ -38,4 +49,8 @@ TailormeChat::Application.routes.draw do
 
   post "create_chat" => "ios_iphone#create_message_ios"
   post "show_chat" => "ios_iphone#load_messages"
+
+  post "load_tailors" => "ios_iphone#load_tailors"
+  
+  post "send_email_to_iphone" => "ios_iphone#email_io7"
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140714102542) do
+ActiveRecord::Schema.define(version: 20140819121348) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,6 +29,7 @@ ActiveRecord::Schema.define(version: 20140714102542) do
     t.integer  "receiver"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "is_seen",    default: 0
   end
 
   create_table "shops", force: true do |t|
@@ -51,6 +52,33 @@ ActiveRecord::Schema.define(version: 20140714102542) do
     t.datetime "updated_at"
     t.string   "user_type"
     t.string   "shop_name"
+    t.string   "title"
   end
+
+  create_table "visits", id: false, force: true do |t|
+    t.uuid     "id",               null: false
+    t.uuid     "visitor_id"
+    t.string   "ip"
+    t.text     "user_agent"
+    t.text     "referrer"
+    t.text     "landing_page"
+    t.integer  "user_id"
+    t.string   "referring_domain"
+    t.string   "search_keyword"
+    t.string   "browser"
+    t.string   "os"
+    t.string   "device_type"
+    t.string   "country"
+    t.string   "region"
+    t.string   "city"
+    t.string   "utm_source"
+    t.string   "utm_medium"
+    t.string   "utm_term"
+    t.string   "utm_content"
+    t.string   "utm_campaign"
+    t.datetime "started_at"
+  end
+
+  add_index "visits", ["user_id"], name: "index_visits_on_user_id", using: :btree
 
 end

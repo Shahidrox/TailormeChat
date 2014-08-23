@@ -1,6 +1,6 @@
 module ApplicationHelper
 
-	def show_field_error(model, field)
+  def show_field_error(model, field)
     s=""
 
     if !model.errors[field].empty?

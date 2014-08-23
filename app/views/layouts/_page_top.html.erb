@@ -1,11 +1,15 @@
 <ul class="breadcrumb breadcrumb-top">
-<li><a href="#"><i class="gi gi-display"></i></a></li>
-<li><a href="#">
-<% if current_user %>Logged in as 
-  <%= current_user.username %>
-  <% if current_user.username.nil? %>
-    <%= current_user.email %>
-  <%end%> 
- <%end%>
-</a></li>
+  <li>
+    <a href="#"><i class="gi gi-display"></i></a>
+  </li>
+  <li>
+    <a href="#">
+      <% if current_user %>Logged in as 
+        <%= current_user.username %>
+        <% if current_user.username.nil? %>
+          <%= current_user.email %>
+        <%end%> 
+      <%end%>
+    </a>
+  </li>
 </ul>

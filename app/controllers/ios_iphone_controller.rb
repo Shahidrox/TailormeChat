@@ -1,4 +1,5 @@
 class IosIphoneController < ApplicationController
+	skip_before_filter :require_login
 # This Methode use in Login with facebook
 	def android
 	    @email=params[:email]
@@ -49,6 +50,28 @@ class IosIphoneController < ApplicationController
 	      end
 	    end
     end
+    
+# Send Email
+
+	def email_io7
+		@sender=params[:my_id]                       # Get iphone side
+		@receiver=params[:user_id] 
+		sender_em=params[:sender_email]
+		@messages=Message.where("(sender=? AND receiver=?) or (sender=? AND receiver=?)",@sender,@receiver,@receiver,@sender)
+		#.order("id DESC")
+		message = []
+		@messages.each do |chat|
+			sql="SELECT C.id,C.reply,C.created_at,U.id,U.email, U.user_type FROM users U,chats C WHERE C.user_id_fk=U.id and C.message_id_fk='#{chat.id}'"
+			chat_details=Message.find_by_sql(sql)
+			type_user=User.find_by_sql(sql)
+			message << {:email => chat_details.first.email, :type => type_user.first.user_type, :time => chat.created_at, :message => chat_details.first.reply}
+		end
+		
+		UserEmail.send_email_to_user(message,sender_em).deliver
+		respond_to do |format|
+			format.json { render :json => "Success" }
+		end
+	end
 # This Method use to Send message through client to shop ios
 	def create_message_shop_ios
 	    @client_message = params[:message]
@@ -110,24 +133,37 @@ class IosIphoneController < ApplicationController
 		else			
 			respond_to do |format|
 	        	msg = { :status => "ok", :message => "You Can't post message to your own"}
-	        format.json  { render :json => msg }
-	      end
+	        	format.json  { render :json => msg }
+	      	end
 		end
 	end
 	def load_messages
 		@sender=params[:my_id]                       # Get iphone side
 		@receiver=params[:user_id] 
-		@messages=Message.where("(sender=? AND receiver=?) or (sender=? AND receiver=?)",@sender,@receiver,@receiver,@sender).order("id DESC")
+		@messages=Message.where("(sender=? AND receiver=?) or (sender=? AND receiver=?)",@sender,@receiver,@receiver,@sender)#.order("id DESC")
     	
     	message = []
     	@messages.each do |chat|
 			sql="SELECT C.id,C.reply,C.created_at,U.id,U.email, U.user_type FROM users U,chats C WHERE C.user_id_fk=U.id and C.message_id_fk='#{chat.id}'"
 			chat_details=Message.find_by_sql(sql)
 			type_user=User.find_by_sql(sql)
-
 			message << { :email => chat_details.first.email, :type => type_user.first.user_type, :time => chat.created_at, :message => chat_details.first.reply}
 		end
 		render :json => message.to_json	
 	end
-
+# This Methode use For Chats
+	def load_tailors
+		@shop_name=params[:shop_name]
+		@title=params[:title]
+		user = User.where(:user_type => "tailor", :shop_name => @shop_name, :title => @title).select("id","username","email")
+		if user.nil?
+			render json: {message: "No any tailor in this group"}
+		else			
+		  	details = []
+			user.each do |chat|
+				details << { :id => chat.id, :type => chat.username, :email => chat.email}
+			end
+			render :json => details.to_json	
+		end
+	end
 end
